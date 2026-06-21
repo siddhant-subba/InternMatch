@@ -1,9 +1,8 @@
-# ---- InternMatch production image (nginx + php-fpm + supervisor) ----
+# ---- InternMatch production image (Caddy + php-fpm + supervisor) ----
 FROM php:8.2-fpm
 
-# System packages, PHP extensions, nginx and supervisor
+# System packages, PHP extensions and supervisor
 RUN apt-get update && apt-get install -y --no-install-recommends \
-        nginx \
         supervisor \
         git \
         unzip \
@@ -13,8 +12,9 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
-# Composer (copied from the official composer image)
+# Composer + Caddy binaries from their official images
 COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
+COPY --from=caddy:2    /usr/bin/caddy    /usr/bin/caddy
 
 WORKDIR /var/www/html
 
@@ -31,10 +31,10 @@ RUN composer dump-autoload --optimize --no-dev \
     && chmod -R 775 storage bootstrap/cache
 
 # Container configuration
-COPY docker/php.ini        /usr/local/etc/php/conf.d/zz-internmatch.ini
-COPY docker/nginx.conf     /etc/nginx/sites-enabled/default
+COPY docker/php.ini          /usr/local/etc/php/conf.d/zz-internmatch.ini
+COPY docker/Caddyfile        /etc/caddy/Caddyfile
 COPY docker/supervisord.conf /etc/supervisor/conf.d/supervisord.conf
-COPY docker/entrypoint.sh  /usr/local/bin/entrypoint.sh
+COPY docker/entrypoint.sh    /usr/local/bin/entrypoint.sh
 RUN chmod +x /usr/local/bin/entrypoint.sh
 
 EXPOSE 80

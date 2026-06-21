@@ -8,7 +8,8 @@ services:
     container_name: internmatch_app
     restart: unless-stopped
     ports:
-      - "80:80"            # change to "8080:80" if something already uses port 80
+      # Only exposed on localhost. Your host Caddy reverse-proxies to this.
+      - "127.0.0.1:8080:80"
     volumes:
       - ./.env:/var/www/html/.env   # your real config lives here, on the host
       - app_storage:/var/www/html/storage
