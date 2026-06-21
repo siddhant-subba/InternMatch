@@ -1,0 +1,46 @@
+# docker-compose reads the .env file in this directory for ${...} values below.
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: internmatch
+    container_name: internmatch_app
+    restart: unless-stopped
+    ports:
+      - "80:80"            # change to "8080:80" if something already uses port 80
+    volumes:
+      - ./.env:/var/www/html/.env   # your real config lives here, on the host
+      - app_storage:/var/www/html/storage
+    depends_on:
+      db:
+        condition: service_healthy
+    networks:
+      - internmatch
+
+  db:
+    image: mysql:8.0
+    container_name: internmatch_db
+    restart: unless-stopped
+    environment:
+      MYSQL_DATABASE: ${DB_DATABASE}
+      MYSQL_USER: ${DB_USERNAME}
+      MYSQL_PASSWORD: ${DB_PASSWORD}
+      MYSQL_ROOT_PASSWORD: ${DB_ROOT_PASSWORD}
+    volumes:
+      - db_data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-p${DB_ROOT_PASSWORD}"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+    networks:
+      - internmatch
+
+volumes:
+  db_data:
+  app_storage:
+
+networks:
+  internmatch:
+    driver: bridge

@@ -1,5 +1,8 @@
 * text=auto eol=lf
 
+# Shell scripts must always use LF so they run inside the Linux container.
+*.sh text eol=lf
+
 *.blade.php diff=html
 *.css diff=css
 *.html diff=html
