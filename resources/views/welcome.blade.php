@@ -21,7 +21,8 @@
                 0 1px 0 #6366f1,
                 0 2px 0 #4f46e5,
                 0 3px 0 #4338ca,
-                0 4px 0 #3730a3,
+                0 3px 0 #3730a3,
+                0 4px 0 #312e81,
                 0 5px 0 #312e81,
                 0 8px 12px rgba(99, 102, 241, 0.3),
                 0 14px 16px rgba(0, 0, 0, 0.5);
@@ -35,7 +36,6 @@
     <header class="border-b border-slate-900 bg-slate-950/70 backdrop-blur sticky top-0 z-50 px-5 py-4">
         <div class="container mx-auto flex justify-between items-center max-w-6xl">
             
-            <!-- High-Quality 3D Logo Component -->
             <h1>
                 <a href="/" class="flex items-center gap-3 group perspective-1000 py-2">
                     <div class="relative drop-shadow-[0_4px_10px_rgba(99,102,241,0.25)] [transform:rotateX(20deg)_rotateY(-20deg)] group-hover:[transform:rotateX(15deg)_rotateY(-15deg)_translateY(-2px)] transition-all duration-300 ease-out">
@@ -64,28 +64,22 @@
                 </a>
             </h1>
             
-            <!-- Converted Plain Menu Items into 3D Gradient Buttons matching image_0d1987.png -->
             <nav class="hidden md:flex items-center gap-4 text-sm font-medium">
-                <!-- 3D About Button -->
                 <div class="relative group/btn inline-block">
                     <div class="absolute inset-0 bg-indigo-900 rounded-xl translate-y-1 group-hover/btn:translate-y-1.5 transition-transform"></div>
-                    <a href="/about" class="relative block bg-gradient-to-r from-indigo-600 to-purple-600 text-white font-bold text-xs px-4 py-2.5 rounded-xl -translate-y-0.5 group-hover/btn:-translate-y-1 active:translate-y-0 transition-transform shadow-lg">
+                    <a href="/about" class="relative block bg-gradient-to-r from-indigo-600 to-purple-600 text-white font-bold text-sm px-4 py-2 rounded-xl -translate-y-0.5 group-hover/btn:-translate-y-1 active:translate-y-0 transition-transform shadow-lg shadow-indigo-600/15">
                         About
                     </a>
                 </div>
-
-                <!-- 3D Our Team Button -->
                 <div class="relative group/btn inline-block">
                     <div class="absolute inset-0 bg-indigo-900 rounded-xl translate-y-1 group-hover/btn:translate-y-1.5 transition-transform"></div>
-                    <a href="/team" class="relative block bg-gradient-to-r from-indigo-600 to-purple-600 text-white font-bold text-xs px-4 py-2.5 rounded-xl -translate-y-0.5 group-hover/btn:-translate-y-1 active:translate-y-0 transition-transform shadow-lg">
+                    <a href="/team" class="relative block bg-gradient-to-r from-indigo-600 to-purple-600 text-white font-bold text-sm px-4 py-2 rounded-xl -translate-y-0.5 group-hover/btn:-translate-y-1 active:translate-y-0 transition-transform shadow-lg shadow-indigo-600/15">
                         Our Team
                     </a>
                 </div>
-
-                <!-- 3D Help & FAQ Button -->
                 <div class="relative group/btn inline-block">
                     <div class="absolute inset-0 bg-indigo-900 rounded-xl translate-y-1 group-hover/btn:translate-y-1.5 transition-transform"></div>
-                    <a href="/help" class="relative block bg-gradient-to-r from-indigo-600 to-purple-600 text-white font-bold text-xs px-4 py-2.5 rounded-xl -translate-y-0.5 group-hover/btn:-translate-y-1 active:translate-y-0 transition-transform shadow-lg">
+                    <a href="/help" class="relative block bg-gradient-to-r from-indigo-600 to-purple-600 text-white font-bold text-sm px-4 py-2 rounded-xl -translate-y-0.5 group-hover/btn:-translate-y-1 active:translate-y-0 transition-transform shadow-lg shadow-indigo-600/15">
                         Help & FAQ
                     </a>
                 </div>
@@ -101,27 +95,24 @@
                     </span>
 
                     @can('manage-internships')
-                        <!-- 3D Header Route Creator Button -->
                         <div class="relative group/btn inline-block">
                             <div class="absolute inset-0 bg-indigo-900 rounded-xl translate-y-1 group-hover/btn:translate-y-1.5 transition-transform"></div>
-                            <a href="/internships/create" class="relative block bg-gradient-to-r from-indigo-600 to-purple-600 text-white font-bold text-sm px-4 py-2.5 rounded-xl -translate-y-0.5 group-hover/btn:-translate-y-1 active:translate-y-0 transition-transform shadow-lg">
+                            <a href="/internships/create" class="relative block bg-gradient-to-r from-indigo-600 to-purple-600 text-white font-bold text-sm px-4 py-2 rounded-xl -translate-y-0.5 group-hover/btn:-translate-y-1 active:translate-y-0 transition-transform shadow-lg">
                                 + New Route
                             </a>
                         </div>
                     @endcan
 
-                    <!-- 3D Header Logout Button -->
                     <div class="relative group/btn inline-block">
                         <div class="absolute inset-0 bg-rose-950 rounded-xl translate-y-1 transition-transform"></div>
                         <form action="/logout" method="POST" class="inline relative block">
                             @csrf
-                            <button type="submit" class="bg-gradient-to-r from-rose-600 to-pink-600 text-white font-bold text-sm px-4 py-2.5 rounded-xl -translate-y-0.5 active:translate-y-0 transition-transform shadow-lg cursor-pointer">
+                            <button type="submit" class="bg-gradient-to-r from-rose-600 to-pink-600 text-white font-bold text-sm px-4 py-2 rounded-xl -translate-y-0.5 active:translate-y-0 transition-transform shadow-lg cursor-pointer">
                                 Logout
                             </button>
                         </form>
                     </div>
                 @else
-                    <!-- 3D Header Login Button -->
                     <div class="relative group/btn inline-block">
                         <div class="absolute inset-0 bg-indigo-900 rounded-xl translate-y-1 group-hover/btn:translate-y-1.5 transition-transform"></div>
                         <a href="/login" class="relative block bg-gradient-to-r from-indigo-600 to-purple-600 text-white font-bold text-sm px-5 py-2.5 rounded-xl -translate-y-0.5 group-hover/btn:-translate-y-1 active:translate-y-0 transition-transform shadow-lg shadow-indigo-600/15">
@@ -129,7 +120,6 @@
                         </a>
                     </div>
 
-                    <!-- 3D Header Sign Up Button -->
                     <div class="relative group/btn inline-block">
                         <div class="absolute inset-0 bg-indigo-900 rounded-xl translate-y-1 group-hover/btn:translate-y-1.5 transition-transform"></div>
                         <a href="/register" class="relative block bg-gradient-to-r from-indigo-600 to-purple-600 text-white font-bold text-sm px-5 py-2.5 rounded-xl -translate-y-0.5 group-hover/btn:-translate-y-1 active:translate-y-0 transition-transform shadow-lg shadow-indigo-600/15">
@@ -163,7 +153,6 @@
 
             @auth
                 @if(Auth::user()->is_admin)
-                    <!-- 3D Section Add Button -->
                     <div class="relative group/btn shrink-0 flex justify-center md:justify-end">
                         <div class="absolute inset-0 bg-indigo-900 rounded-xl translate-y-1 group-hover/btn:translate-y-1.5 transition-transform"></div>
                         <a href="/internships/create" class="relative inline-flex items-center gap-2 bg-gradient-to-r from-indigo-600 to-purple-600 shadow-xl text-white px-6 py-3.5 rounded-xl font-black tracking-wide -translate-y-0.5 group-hover/btn:-translate-y-1 active:translate-y-0 transition-transform text-sm">
@@ -234,7 +223,6 @@
                         <div class="pt-4 border-t border-slate-900 flex justify-between items-center gap-3">
                             @auth
                                 @if(Auth::user()->is_admin)
-                                    <!-- 3D Card Edit Option -->
                                     <div class="relative group/btn flex-1">
                                         <div class="absolute inset-0 bg-slate-950 rounded-xl translate-y-1 transition-transform"></div>
                                         <a href="/internships/{{ $job->id }}/edit" class="relative block text-center bg-gradient-to-r from-slate-800 to-slate-700 text-white text-sm font-bold py-3.5 rounded-xl -translate-y-0.5 active:translate-y-0 transition-transform shadow-md border border-slate-600/20">
@@ -242,7 +230,6 @@
                                         </a>
                                     </div>
                                     
-                                    <!-- 3D Card Delete Option -->
                                     <div class="relative group/btn flex-1">
                                         <div class="absolute inset-0 bg-rose-950 rounded-xl translate-y-1 transition-transform"></div>
                                         <form action="/internships/{{ $job->id }}" method="POST" onsubmit="return confirm('Are you sure you want to remove this opening permanently?');" class="w-full">
@@ -254,7 +241,6 @@
                                         </form>
                                     </div>
                                 @else
-                                    <!-- 3D Card Primary Apply Button -->
                                     <div class="relative group/btn w-full">
                                         <div class="absolute inset-0 bg-indigo-900 rounded-xl translate-y-1 group-hover/btn:translate-y-1.5 transition-transform"></div>
                                         <a href="/internships/{{ $job->id }}/apply" class="relative block text-center w-full bg-gradient-to-r from-indigo-600 to-purple-600 text-white font-black tracking-wide py-3.5 rounded-xl -translate-y-0.5 group-hover/btn:-translate-y-1 active:translate-y-0 transition-transform shadow-lg shadow-indigo-500/10">
@@ -263,7 +249,6 @@
                                     </div>
                                 @endif
                             @else
-                                <!-- 3D Card Secondary Call to Action -->
                                 <div class="relative group/btn w-full">
                                     <div class="absolute inset-0 bg-indigo-900 rounded-xl translate-y-1 group-hover/btn:translate-y-1.5 transition-transform"></div>
                                     <a href="/login" class="relative block text-center w-full bg-gradient-to-r from-indigo-600 to-purple-600 text-white font-black tracking-wide py-3.5 rounded-xl -translate-y-0.5 group-hover/btn:-translate-y-1 active:translate-y-0 transition-transform shadow-lg shadow-indigo-500/10">
