@@ -1,0 +1,19 @@
+# Internal Caddy: plain HTTP on :80 inside the container.
+# HTTPS is handled by the Caddy running on your VPS host, which
+# reverse-proxies to this container.
+{
+	# No automatic HTTPS here; the host Caddy terminates TLS.
+	auto_https off
+	admin off
+}
+
+:80 {
+	root * /var/www/html/public
+	encode zstd gzip
+
+	# Hand PHP requests to php-fpm; Caddy handles try_files/index.php routing.
+	php_fastcgi 127.0.0.1:9000
+	file_server
+
+	header -Server
+}

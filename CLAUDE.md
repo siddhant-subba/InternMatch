@@ -1,3 +1,40 @@
+# CLAUDE.md
+
+This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
+
+## Project
+
+InternMatch is a Laravel 12 internship job board. Admins post/edit/delete internship listings; the public browses listings and submits applications. Authentication is session-based (no API). Built with PHP 8.2, Blade, and Tailwind CSS.
+
+## Commands
+
+- Start full dev environment (server + queue listener + Vite): `composer run dev`
+- Run server only: `php artisan serve`
+- Run tests: `php artisan test --compact` (Pest)
+- Run a single test: `php artisan test --compact --filter=testName`
+- Format PHP before finalizing changes: `vendor/bin/pint --dirty --format agent`
+- Create the schema and demo data: `php artisan migrate:fresh --seed`
+- Tail logs: `php artisan pail`
+
+## Database
+
+- Configured for **MySQL** (`DB_DATABASE=internmatch` in `.env.example`), not SQLite. A local MySQL instance must be running.
+- Seeding (`DatabaseSeeder`) creates two login accounts and three sample internships:
+  - Admin: `admin@internmatch.com` / `password123` (`is_admin = true`)
+  - User: `user@internmatch.com` / `password123` (`is_admin = false`)
+
+## Architecture
+
+- **Authorization is a single Gate, not roles/policies.** `users.is_admin` (boolean column on the users table) drives everything. `AppServiceProvider::boot()` defines the `manage-internships` Gate as `(bool) $user->is_admin`. Admin-only routes in `routes/web.php` are grouped under `middleware(['auth', 'can:manage-internships'])`. To gate new admin features, add them to that group; there is no separate role system.
+- **Three models, one relationship (implicit).** `Internship` (title/company/location/description) and `Application` (applicant info + `internship_id` + `resume_link` URL) — the link is by the `internship_id` foreign key, but **no Eloquent relationship methods are defined** on either model. Queries use raw foreign keys, not `$internship->applications`.
+- **Two controllers cover the domain:** `InternshipController` handles both the listing CRUD and the public apply flow (`applyForm`/`submitApplication`); `AuthController` handles login/register/logout. `PageController` serves static pages.
+- **Routes are not all RESTful-resourced** and many lack `->name()`. Some routes sit outside the auth middleware group intentionally (apply form is public). When adding routes, match the existing flat style in `routes/web.php`.
+
+## Frontend — important
+
+- **There is no shared Blade layout and the Vite pipeline is effectively unused for pages.** Every view in `resources/views/` is a complete standalone HTML document that loads Tailwind from a CDN: `<script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>`. No `@extends`, no `@include`, no `@vite`.
+- Consequence: a styling/markup change must be made in **each** view file (header, footer, nav are duplicated per page). Running `npm run build` / `npm run dev` does **not** affect how pages render, because views don't reference the compiled `resources/css/app.css` or `resources/js/app.js`.
+
 <laravel-boost-guidelines>
 === foundation rules ===
 
