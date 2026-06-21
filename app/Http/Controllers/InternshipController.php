@@ -10,8 +10,19 @@ use Illuminate\Support\Facades\Schema;
 class InternshipController extends Controller
 {
     /**
-     * Display a listing of the internships.
-     */
+    
+    
+ * Show the application form for a specific internship.
+ */
+ public function applyForm($id)
+ {
+    // Find the internship or throw a 404 error if it doesn't exist
+    $internship = \App\Models\Internship::findOrFail($id);
+    
+    // Return your application form blade view (e.g., resources/views/internships/apply.blade.php)
+    // Pass the internship variable to the view
+    return view('internships.apply', compact('internship'));
+ }  
     public function index()
     {
         // Fetch postings along with their associated applications relationship

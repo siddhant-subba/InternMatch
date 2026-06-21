@@ -40,3 +40,9 @@ Route::post('/internships/{id}/apply', [InternshipController::class, 'storeAppli
 
 // This ensures your application endpoint routes accurately to the method above
 Route::post('/internships/{internship}/apply', [InternshipController::class, 'submitApplication']);
+
+// 1. GET route to display the application page form
+Route::get('/internships/{internship}/apply', [InternshipController::class, 'applyForm']);
+
+// 2. POST route to process the form submission (from our previous steps)
+Route::post('/internships/{internship}/apply', [InternshipController::class, 'submitApplication']);
