@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Internship extends Model
 {
@@ -17,4 +18,8 @@ class Internship extends Model
         'location',
         'description',
     ];
+    public function applications()
+    {
+        return $this->hasMany(Application::class);
+    }
 }

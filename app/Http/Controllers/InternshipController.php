@@ -2,87 +2,63 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Internship;
 use Illuminate\Http\Request;
+use App\Models\Internship;
+use App\Models\Application;
+use Illuminate\Support\Facades\Schema;
 
 class InternshipController extends Controller
 {
-    // READ: Display all internships (Landing Page)
+    /**
+     * Display a listing of the internships.
+     */
     public function index()
     {
-        $postings = Internship::latest()->get();
+        // Fetch postings along with their associated applications relationship
+        $postings = Internship::with('applications')->get();
         return view('welcome', compact('postings'));
     }
 
-    // CREATE: Show the form to add a new internship
-    public function create()
+    /**
+     * Process and store an incoming internship application.
+     */
+    public function submitApplication(Request $request, $internshipId)
     {
-        return view('internships.create');
-    }
-
-    // CREATE: Store the form data into the database
-    public function store(Request $request)
-    {
-        $validated = $request->validate([
-            'title' => 'required|max:255',
-            'company' => 'required|max:255',
-            'location' => 'required|max:255',
-            'description' => 'required',
+        // 1. Validate form fields according to your submitted form body keys
+        $request->validate([
+            'applicant_name'  => 'required|string|max:255',
+            'applicant_email' => 'required|email|max:255',
+            'resume_link'     => 'nullable|string',
+            'cover_letter'    => 'nullable|string',
         ]);
 
-        Internship::create($validated);
+        // 2. Initialize and save the record to the applications table
+        $application = new Application();
+        $application->internship_id = $internshipId;
+        
+        // Check and map user_id safely if the column exists in your table layout
+        if (Schema::hasColumn('applications', 'user_id')) {
+            $application->user_id = auth()->id();
+        }
+        
+        // DIRECT DATABASE MAPPING: Save form data directly to your specific database columns
+        $application->applicant_name  = $request->input('applicant_name');
+        $application->applicant_email = $request->input('applicant_email');
+        
+        // Handle flexible naming conventions for the resume file/link field safely
+        if (Schema::hasColumn('applications', 'resume_link')) {
+            $application->resume_link = $request->input('resume_link');
+        } elseif (Schema::hasColumn('applications', 'resume_path')) {
+            $application->resume_path = $request->input('resume_link');
+        }
 
-        return redirect('/')->with('success', 'Internship vacancy posted successfully!');
+        if (Schema::hasColumn('applications', 'cover_letter')) {
+            $application->cover_letter = $request->input('cover_letter');
+        }
+
+        $application->save();
+
+        // 3. Redirect smoothly back to home directory with a status message
+        return redirect('/')->with('success', 'Application registered successfully!');
     }
-
-    // UPDATE: Show the form to edit an existing internship
-    public function edit(Internship $internship)
-    {
-        return view('internships.edit', compact('internship'));
-    }
-
-    // UPDATE: Save the updated changes back to the database
-    public function update(Request $request, Internship $internship)
-    {
-        $validated = $request->validate([
-            'title' => 'required|max:255',
-            'company' => 'required|max:255',
-            'location' => 'required|max:255',
-            'description' => 'required',
-        ]);
-
-        $internship->update($validated);
-
-        return redirect('/')->with('success', 'Internship updated successfully!');
-    }
-
-    // DELETE: Remove an internship from the database
-    public function destroy(Internship $internship)
-    {
-        $internship->delete();
-        return redirect('/')->with('success', 'Internship vacancy removed successfully.');
-    }
-    // Show the application form page
-public function applyForm(Internship $internship)
-{
-    return view('internships.apply', compact('internship'));
-}
-
-// Save the application data
-public function submitApplication(Request $request, Internship $internship)
-{
-    $validated = $request->validate([
-        'applicant_name' => 'required|max:255',
-        'applicant_email' => 'required|email|max:255',
-        'cover_letter' => 'required',
-        'resume_link' => 'required|url',
-    ]);
-
-    // Add the internship ID automatically
-    $validated['internship_id'] = $internship->id;
-
-    \App\Models\Application::create($validated);
-
-    return redirect('/')->with('success', 'Your application for ' . $internship->title . ' was submitted successfully!');
-}
 }

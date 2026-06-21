@@ -15,7 +15,7 @@ return new class extends Migration
         $table->id();
         $table->foreignId('internship_id')->constrained()->onDelete('cascade'); // Links to the internship
         $table->string('applicant_name');
-        $table->string('applicant_email');
+        $table->string('applicant_email')->nullable();
         $table->text('cover_letter');
         $table->string('resume_link'); // URL to Google Drive/Dropbox resume
         $table->timestamps();

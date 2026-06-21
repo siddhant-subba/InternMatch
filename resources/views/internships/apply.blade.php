@@ -15,7 +15,8 @@
             <p class="text-slate-400 text-sm">at {{ $internship->company }}</p>
         </div>
 
-        <form action="/internships/{{ $internship->id }}/apply" method="POST" class="space-y-5">
+        <form action="/internships/{{ $internship->id }}/apply" method="POST" enctype="multipart/form-data">
+
             @csrf 
             
             <div>

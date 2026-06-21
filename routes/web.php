@@ -35,3 +35,8 @@ Route::post('/logout', [AuthController::class, 'logout'])->middleware('auth');
 Route::get('/about', [PageController::class, 'about'])->name('about');
 Route::get('/help', [PageController::class, 'help'])->name('help');
 Route::get('/team', [PageController::class, 'team'])->name('team');
+Route::get('/', [InternshipController::class, 'index']);
+Route::post('/internships/{id}/apply', [InternshipController::class, 'storeApplication']);
+
+// This ensures your application endpoint routes accurately to the method above
+Route::post('/internships/{internship}/apply', [InternshipController::class, 'submitApplication']);
