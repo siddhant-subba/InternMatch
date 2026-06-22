@@ -3,47 +3,44 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Post an Internship — InternMatch</title>
-    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <title>Post New Internship — InternMatch</title>
+    <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body class="bg-slate-900 text-slate-100 font-sans min-h-screen flex items-center justify-center p-4">
+<body class="bg-[#050714] text-slate-100 font-sans min-h-screen flex flex-col justify-center items-center p-6">
 
-    <div class="w-full max-w-xl bg-slate-800/60 border border-slate-700 rounded-2xl shadow-xl p-8 backdrop-blur">
-        <div class="mb-6">
-            <a href="/" class="text-sm text-indigo-400 hover:underline">← Go Back Home</a>
-            <h2 class="text-2xl font-black mt-2 text-white">Post an Open Position</h2>
-        </div>
+    <div class="w-full max-w-xl bg-[#0b101d] border border-slate-900 rounded-2xl p-8 shadow-2xl">
+        <h2 class="text-2xl font-black mb-1 text-white tracking-tight">Post an <span class="text-indigo-400">Internship</span></h2>
+        <p class="text-xs text-slate-400 mb-6">Fill in the fields below to dispatch a new opportunity to the live matching index.</p>
 
-        <form action="/internships" method="POST" class="space-y-5">
-            @csrf <!-- Secret security key required by Laravel forms -->
-            
+        <form action="/internships" method="POST" class="space-y-4">
+            @csrf
+
             <div>
-                <label class="block text-xs font-bold text-slate-400 uppercase tracking-wider mb-2">Internship Title</label>
-                <input type="text" name="title" placeholder="e.g. Full Stack Developer Intern" required
-                    class="w-full bg-slate-900/60 border border-slate-700 rounded-xl px-4 py-3 text-slate-100 focus:outline-none focus:border-indigo-500 transition">
+                <label class="block text-[11px] font-bold uppercase tracking-wider text-slate-400 mb-1.5">Job Title</label>
+                <input type="text" name="title" required placeholder="e.g., Backend Laravel Intern" class="bg-[#050811] border border-slate-800 rounded-xl p-3 w-full text-sm text-white focus:outline-none focus:border-indigo-500 transition">
             </div>
 
             <div>
-                <label class="block text-xs font-bold text-slate-400 uppercase tracking-wider mb-2">Company Name</label>
-                <input type="text" name="company" placeholder="e.g. InternMatch Tech" required
-                    class="w-full bg-slate-900/60 border border-slate-700 rounded-xl px-4 py-3 text-slate-100 focus:outline-none focus:border-indigo-500 transition">
+                <label class="block text-[11px] font-bold uppercase tracking-wider text-slate-400 mb-1.5">Company Name</label>
+                <input type="text" name="company" required placeholder="e.g., Kathmandu Tech Solutions" class="bg-[#050811] border border-slate-800 rounded-xl p-3 w-full text-sm text-white focus:outline-none focus:border-indigo-500 transition">
             </div>
 
             <div>
-                <label class="block text-xs font-bold text-slate-400 uppercase tracking-wider mb-2">Office Location</label>
-                <input type="text" name="location" placeholder="e.g. Tinkune, Kathmandu" required
-                    class="w-full bg-slate-900/60 border border-slate-700 rounded-xl px-4 py-3 text-slate-100 focus:outline-none focus:border-indigo-500 transition">
+                <label class="block text-[11px] font-bold uppercase tracking-wider text-slate-400 mb-1.5">Location</label>
+                <input type="text" name="location" required placeholder="e.g., Kupondole, Lalitpur" class="bg-[#050811] border border-slate-800 rounded-xl p-3 w-full text-sm text-white focus:outline-none focus:border-indigo-500 transition">
             </div>
 
             <div>
-                <label class="block text-xs font-bold text-slate-400 uppercase tracking-wider mb-2">Job Description & Requirements</label>
-                <textarea name="description" rows="5" placeholder="Detail the skills needed and daily project expectations..." required
-                    class="w-full bg-slate-900/60 border border-slate-700 rounded-xl px-4 py-3 text-slate-100 focus:outline-none focus:border-indigo-500 transition"></textarea>
+                <label class="block text-[11px] font-bold uppercase tracking-wider text-slate-400 mb-1.5">Role Description</label>
+                <textarea name="description" rows="5" required placeholder="Describe responsibilities, stack requirements, and mentorship expectations..." class="bg-[#050811] border border-slate-800 rounded-xl p-3 w-full text-sm text-white focus:outline-none focus:border-indigo-500 transition resize-none"></textarea>
             </div>
 
-            <button type="submit" class="w-full bg-indigo-600 text-white font-bold py-3.5 rounded-xl hover:bg-indigo-500 transition shadow-lg shadow-indigo-600/20">
-                Publish Internship Opportunity
-            </button>
+            <div class="flex items-center justify-end gap-3 pt-2">
+                <a href="/" class="text-xs text-slate-400 font-semibold hover:text-white transition px-4 py-2">Cancel</a>
+                <button type="submit" class="bg-gradient-to-b from-[#4f46e5] to-[#a855f7] text-white font-extrabold text-xs px-6 py-3 rounded-xl border-b-[4px] border-[#2e2a85] active:border-b-0 active:translate-y-[4px] transition-all duration-100 shadow-lg tracking-wide cursor-pointer">
+                    Publish Position
+                </button>
+            </div>
         </form>
     </div>
 

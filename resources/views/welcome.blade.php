@@ -63,10 +63,18 @@
 
     <main class="container mx-auto my-6 px-4 max-w-6xl flex-grow relative z-10">
         
-        <div class="mb-10 pb-4">
-            <h2 class="text-4xl font-black tracking-tight text-white">Available <span class="text-transparent bg-clip-text bg-gradient-to-r from-[#a78bfa] to-[#c084fc]">Positions</span></h2>
-            <p class="mt-3 text-slate-400 text-xs max-w-xl leading-relaxed">Explore premium matching internships hosted by growing technology companies and engineering clusters across Nepal.</p>
-        </div>
+        <div class="mb-10 pb-4 flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+     <div>
+        <h2 class="text-4xl font-black tracking-tight text-white">Available <span class="text-transparent bg-clip-text bg-gradient-to-r from-[#a78bfa] to-[#c084fc]">Positions</span></h2>
+        <p class="mt-3 text-slate-400 text-xs max-w-xl leading-relaxed">Explore premium matching internships hosted by growing technology companies and engineering clusters across Nepal.</p>
+     </div>
+    
+     @auth @if(Auth::user()->is_admin)
+        <a href="/internships/create" class="bg-gradient-to-b from-indigo-500 to-purple-600 text-white font-black text-xs px-5 py-3.5 rounded-xl border-b-[4px] border-indigo-900 active:border-b-0 active:translate-y-[4px] transition-all duration-100 shadow-md whitespace-nowrap self-start md:self-auto">
+            ➕ Add New Position
+        </a>
+     @endif @endauth
+    </div>
 
         <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
             @forelse($postings as $job)
@@ -153,7 +161,9 @@
                     <div class="p-6 pt-0 z-20">
                         <div class="flex justify-between items-center gap-2">
                             @auth @if(Auth::user()->is_admin)
-                                <a href="/internships/{{ $job->id }}/edit" class="flex-1 text-center bg-slate-900 text-slate-400 text-xs font-semibold py-2.5 rounded-xl border border-slate-800 hover:text-white transition">Edit</a>
+                                <a href="/internships/{{ $job->id }}/edit" class="flex-1 text-center bg-slate-900 text-slate-400 text-xs font-semibold py-2.5 rounded-xl border border-slate-800 hover:text-white transition">
+                                 Edit
+                                </a>
                                 <form action="/internships/{{ $job->id }}" method="POST" onsubmit="return confirm('Drop vacancy opening?');" class="flex-1">@csrf @method('DELETE')
                                     <button type="submit" class="w-full bg-gradient-to-b from-red-600 to-red-700 text-white text-xs font-semibold py-2.5 rounded-xl border-b-[4px] border-red-900 active:border-b-0 active:translate-y-[4px] transition-all duration-100 cursor-pointer">Delete</button>
                                 </form>

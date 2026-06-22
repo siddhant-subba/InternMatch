@@ -46,3 +46,12 @@ Route::get('/internships/{internship}/apply', [InternshipController::class, 'app
 
 // 2. POST route to process the form submission (from our previous steps)
 Route::post('/internships/{internship}/apply', [InternshipController::class, 'submitApplication']);
+// Add this line to show the edit page layout view
+Route::get('/internships/{internship}/edit', [InternshipController::class, 'edit']);
+
+// Add this line to handle the form submission when you save changes
+Route::put('/internships/{internship}', [InternshipController::class, 'update']);
+Route::get('/internships/create', [InternshipController::class, 'create']);
+
+// 2. POST route to process saving the new internship entry
+Route::post('/internships', [InternshipController::class, 'storeNewOffer']);
